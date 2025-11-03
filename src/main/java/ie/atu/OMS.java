@@ -8,7 +8,7 @@ public class OMS {
     public static void addOrder(ArrayList<Order> orders) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter order ID: ");
-        String orderId = sc.nextLine();
+        String orderId = sc.nextLine().strip();
         for (Order order : orders) {
             if (orderId.equals(order.getOrderId())) {
                 System.out.println("Order ID already exists! ");
@@ -16,14 +16,14 @@ public class OMS {
             }
         }
         System.out.println("Please enter customer name: ");
-        String customerName = sc.nextLine();
+        String customerName = sc.nextLine().strip();
         System.out.println("Please enter product name: ");
-        String productName = sc.nextLine();
+        String productName = sc.nextLine().strip();
         System.out.println("Please enter the price: ");
-        String priceString = sc.nextLine();
+        String priceString = sc.nextLine().strip();
         double price = Double.parseDouble(priceString);
         System.out.println("Please enter the quantity: ");
-        String quantityString = sc.nextLine();
+        String quantityString = sc.nextLine().strip();
         int quantity = Integer.parseInt(quantityString);
         Order order = new Order(orderId, customerName, productName, price, quantity);
         orders.add(order);
@@ -32,13 +32,53 @@ public class OMS {
     public static void updateOrder(ArrayList<Order> orders) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter order ID: ");
-        String orderId = sc.nextLine();
+        String orderId = sc.nextLine().strip();
         for (Order order : orders) {
             if (orderId.equals(order.getOrderId())) {
-                System.out.println("Select property: \n1 Customer Name\n2 Product Name\n3 Price\n4 Quantity ");
+                while(true) {
+                    System.out.println("Select property: \n1 Customer Name\n2 Product Name\n3 Price\n4 Quantity\n5 Quit ");
+                    String userInput = sc.nextLine().strip();
+
+                    switch (userInput) {
+                        case "1":
+                            System.out.println("Current customer Name = " + order.getCustomerName() + "\nNew data: ");
+                            String newCustomerName = sc.nextLine().strip();
+                            order.setCustomerName(newCustomerName);
+                            break;
+                        case "2":
+                            System.out.println("Current product = " + order.getProductName() + "\nNew data: ");
+                            String newProductName = sc.nextLine().strip();
+                            order.setProductName(newProductName);
+                            break;
+                        case "3":
+                            System.out.println("Current price = " + order.getPrice() + "\nNew data: ");
+                            String newPriceString = sc.nextLine().strip();
+                            double newPrice = Double.parseDouble(newPriceString);
+                            order.setPrice(newPrice);
+                            break;
+                        case "4":
+                            System.out.println("Current quantity = " + order.getQuantity() + "\nNew data: ");
+                            String newQuantityString = sc.nextLine().strip();
+                            int newQuantity = Integer.parseInt(newQuantityString);
+                            order.setQuantity(newQuantity);
+                            break;
+                        case "5":
+                            System.out.println("Quit update");
+                        default:
+                            System.out.println("Invalid input");
+                    }
+                }
             }
         }
         System.out.println("Order not found");
+        System.out.println("Quit update");
 
+
+    }
+
+    public static void listOrders(ArrayList<Order> orders) {
+        for (Order order : orders) {
+            order.toString();
+        }
     }
 }
